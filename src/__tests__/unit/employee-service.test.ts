@@ -2,6 +2,8 @@ import Mongo from '../../database/Mongo'
 import EmployeeService from '../../services/EmployeeService'
 import employeesFixture from '../employees-fixture.json'
 
+import { EmployeeData, Status } from '../../types'
+
 describe('EmployeeService Unit Tests', () => {
   beforeAll(async () => {
     // Inicializa o Jest Mongo
@@ -108,10 +110,60 @@ describe('EmployeeService Unit Tests', () => {
   it('should return a list of employees by status', async () => {
     const employeeService = new EmployeeService()
 
-    let employees = await employeeService.getEmployeesByStatus('ATIVO')
+    let employees = await employeeService.getEmployeesByStatus(Status.ATIVO)
     expect(employees.length).toBe(3)
 
-    employees = await employeeService.getEmployeesByStatus('BLOQUEADO')
+    employees = await employeeService.getEmployeesByStatus(Status.BLOQUEADO)
     expect(employees.length).toBe(1)
+  })
+
+  it('should create an employee', async () => {
+    const employeeService = new EmployeeService()
+
+    const employeeData: EmployeeData = {
+      datacad: '13/11/2020',
+      cargo: 'Dev Jr',
+      cpf: '99999999999',
+      nome: 'Test Employee',
+      ufnasc: 'RN',
+      salario: 8965.30,
+      status: Status.ATIVO
+    }
+
+    const newEmployee = await employeeService.createOrUpdateEmployee(employeeData, null)
+    expect(newEmployee._id).toBeTruthy()
+  })
+
+  it('should update an employee', async () => {
+    const employeeService = new EmployeeService()
+
+    const employee = (await Mongo.getCollection('employees').insertOne({
+      datacad: '13/11/2020',
+      cargo: 'Dev Jr',
+      cpf: '88888888888',
+      nome: 'Test Employee',
+      ufnasc: 'RN',
+      salario: 8965.30,
+      status: Status.BLOQUEADO
+    })).ops[0]
+
+    const employeeUpdateData: EmployeeData = {
+      datacad: '13/11/2020',
+      cargo: 'Dev Jr',
+      cpf: '88888888888',
+      nome: 'Test Employee Updated',
+      ufnasc: 'SP',
+      salario: 7000.30,
+      status: Status.ATIVO
+    }
+
+    const updatedEmployee = await employeeService.createOrUpdateEmployee(employeeUpdateData, employee._id)
+    expect(updatedEmployee.datacad).toEqual(employeeUpdateData.datacad)
+    expect(updatedEmployee.cargo).toEqual(employeeUpdateData.cargo)
+    expect(updatedEmployee.cpf).toEqual(employeeUpdateData.cpf)
+    expect(updatedEmployee.nome).toEqual(employeeUpdateData.nome)
+    expect(updatedEmployee.ufnasc).toEqual(employeeUpdateData.ufnasc)
+    expect(updatedEmployee.salario).toEqual(employeeUpdateData.salario)
+    expect(updatedEmployee.status).toEqual(employeeUpdateData.status)
   })
 })
