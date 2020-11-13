@@ -79,4 +79,12 @@ describe('Integration tests for employee endpoints', () => {
     expect(response.status).toBe(200)
     expect(response.body.length).toBe(1)
   })
+
+  it('should return a error if role is not passed', async () => {
+    const response = await server.get('/employees/role').query({}).send()
+    expect(response.status).toBe(400)
+    expect(response.body).toEqual({
+      message: 'O filtro de cargo é obrigatório'
+    })
+  })
 })
