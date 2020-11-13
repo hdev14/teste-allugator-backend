@@ -1,6 +1,7 @@
 import supertest from 'supertest'
 import App from '../../App'
 import Mongo from '../../database/Mongo'
+import { Status } from '../../types'
 import employeesFixture from '../employees-fixture.json'
 
 describe('Integration tests for employee endpoints', () => {
@@ -189,6 +190,24 @@ describe('Integration tests for employee endpoints', () => {
     expect(response.status).toBe(400)
     expect(response.body).toEqual({
       message: 'Os filtros de faixa salarial são obrigatório'
+    })
+  })
+
+  it('should get a list of employee by status', async () => {
+    let response = await server.get('/employees/status').query({ status: Status.ATIVO }).send()
+    expect(response.status).toBe(200)
+    expect(response.body.length).toBe(3)
+
+    response = await server.get('/employees/status').query({ status: Status.BLOQUEADO }).send()
+    expect(response.status).toBe(200)
+    expect(response.body.length).toBe(1)
+  })
+
+  it('should return a error if status is not passed', async () => {
+    const response = await server.get('/employees/status').query({}).send()
+    expect(response.status).toBe(400)
+    expect(response.body).toEqual({
+      message: 'O filtro de status é obrigatório'
     })
   })
 })
