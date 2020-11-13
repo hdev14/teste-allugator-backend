@@ -110,7 +110,7 @@ class EmployeeController {
       })
     }
 
-    return res.status(200)
+    return res.status(204).json({})
   }
 }
 
