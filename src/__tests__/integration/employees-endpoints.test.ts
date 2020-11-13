@@ -87,4 +87,18 @@ describe('Integration tests for employee endpoints', () => {
       message: 'O filtro de cargo é obrigatório'
     })
   })
+
+  it('should get a list of employee by register date', async () => {
+    let response = await server.get('/employees/register-date').query({ date: '15/04/2017' }).send()
+    expect(response.status).toBe(200)
+    expect(response.body.length).toBe(1)
+
+    response = await server.get('/employees/register-date').query({ date: '19/04/2017' }).send()
+    expect(response.status).toBe(200)
+    expect(response.body.length).toBe(2)
+
+    response = await server.get('/employees/register-date').query({ date: '05/04/2017' }).send()
+    expect(response.status).toBe(200)
+    expect(response.body.length).toBe(1)
+  })
 })
