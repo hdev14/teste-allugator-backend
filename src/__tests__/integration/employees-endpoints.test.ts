@@ -139,25 +139,25 @@ describe('Integration tests for employee endpoints', () => {
       min: 8000, max: 9000
     }).send()
     expect(response.status).toBe(200)
-    expect(response.body[0].nome).toBe('Aaron Aaberg')
+    expect(response.body.length).toBe(1)
 
     response = await server.get('/employees/salary').query({
       min: 5000, max: 6000
     }).send()
     expect(response.status).toBe(200)
-    expect(response.body[0].nome).toBe('Aaron Aaby')
+    expect(response.body.length).toBe(1)
 
     response = await server.get('/employees/salary').query({
       min: 3000, max: 4000
     }).send()
     expect(response.status).toBe(200)
-    expect(response.body[0].nome).toBe('Abbie Aagaard')
+    expect(response.body.length).toBe(1)
 
     response = await server.get('/employees/salary').query({
       min: 0, max: 1000
     }).send()
     expect(response.status).toBe(200)
-    expect(response.body[0].nome).toBe('Adan Aarhus')
+    expect(response.body.length).toBe(1)
 
     response = await server.get('/employees/salary').query({
       min: 5000, max: 9000
@@ -229,6 +229,7 @@ describe('Integration tests for employee endpoints', () => {
   })
 
   it('should create if employee doesnt exists', async () => {
+    const fakeId = new ObjectID()
     const data = {
       datacad: '13/11/2020',
       cargo: 'Dev Jr',
@@ -238,7 +239,7 @@ describe('Integration tests for employee endpoints', () => {
       salario: 8965.30,
       status: Status.ATIVO
     }
-    const fakeId = new ObjectID()
+
     const response = await server.put(`/employees/${fakeId}`).send(data)
     expect(response.status).toBe(200)
     expect(response.body._id).toBeTruthy()
@@ -285,6 +286,7 @@ describe('Integration tests for employee endpoints', () => {
       salario: 8965.30,
       status: Status.BLOQUEADO
     })).ops[0]
+
     const response = await server.delete(`/employees/${employee.cpf}`)
     expect(response.status).toBe(204)
   })

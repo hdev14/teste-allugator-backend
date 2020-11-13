@@ -51,7 +51,7 @@ describe('EmployeeService Unit Tests', () => {
     expect(employeesWithRolePOJr.length).toBe(1)
 
     const employeesWithRoleACSr = await EmployeeService.getEmployeesByRole('AC Sr')
-    expect(employeesWithRolePOJr.length).toBe(1)
+    expect(employeesWithRoleACSr.length).toBe(1)
   })
 
   it('should return a list of employees by register date', async () => {
@@ -81,16 +81,16 @@ describe('EmployeeService Unit Tests', () => {
 
   it('should return a list of employees by salary', async () => {
     let employees = await EmployeeService.getEmployeesBySalary(8000, 9000)
-    expect(employees[0].nome).toBe('Aaron Aaberg')
+    expect(employees.length).toBe(1)
 
     employees = await EmployeeService.getEmployeesBySalary(5000, 6000)
-    expect(employees[0].nome).toBe('Aaron Aaby')
+    expect(employees.length).toBe(1)
 
     employees = await EmployeeService.getEmployeesBySalary(3000, 4000)
-    expect(employees[0].nome).toBe('Abbie Aagaard')
+    expect(employees.length).toBe(1)
 
     employees = await EmployeeService.getEmployeesBySalary(0, 1000)
-    expect(employees[0].nome).toBe('Adan Aarhus')
+    expect(employees.length).toBe(1)
 
     employees = await EmployeeService.getEmployeesBySalary(5000, 9000)
     expect(employees.length).toBe(2)
