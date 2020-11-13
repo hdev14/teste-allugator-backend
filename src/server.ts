@@ -4,7 +4,7 @@ import App from './App'
 
 require('dotenv').config()
 
-Mongo.connect(process.env.MONGO_URL || '').then(connection => {
+Mongo.connect(process.env.MONGO_URL || '').then(() => {
   const server = App.server
 
   const port = process.env.PORT || 3333
@@ -12,5 +12,5 @@ Mongo.connect(process.env.MONGO_URL || '').then(connection => {
     console.log(`Server is running! -> http://localhost:${port}`)
   })
 }).catch(err => {
-  console.log('CONNECTION ERROR -> ', err)
+  console.log(err)
 })
