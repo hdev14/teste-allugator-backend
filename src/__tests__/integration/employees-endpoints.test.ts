@@ -101,4 +101,12 @@ describe('Integration tests for employee endpoints', () => {
     expect(response.status).toBe(200)
     expect(response.body.length).toBe(1)
   })
+
+  it('should return a error if register date is not passed', async () => {
+    const response = await server.get('/employees/register-date').query({}).send()
+    expect(response.status).toBe(400)
+    expect(response.body).toEqual({
+      message: 'O filtro de data de cadastro é obrigatório'
+    })
+  })
 })
