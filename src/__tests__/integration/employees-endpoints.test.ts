@@ -1,3 +1,4 @@
+import { ObjectID } from 'mongodb'
 import supertest from 'supertest'
 import App from '../../App'
 import Mongo from '../../database/Mongo'
@@ -209,5 +210,68 @@ describe('Integration tests for employee endpoints', () => {
     expect(response.body).toEqual({
       message: 'O filtro de status é obrigatório'
     })
+  })
+
+  it('should create an employee', async () => {
+    const data = {
+      datacad: '13/11/2020',
+      cargo: 'Dev Jr',
+      cpf: '99999999999',
+      nome: 'Test Employee',
+      ufnasc: 'RN',
+      salario: 8965.30,
+      status: Status.ATIVO
+    }
+
+    const response = await server.put('/employees').send(data)
+    expect(response.status).toBe(200)
+    expect(response.body._id).toBeTruthy()
+  })
+
+  it('should create if employee doesnt exists', async () => {
+    const data = {
+      datacad: '13/11/2020',
+      cargo: 'Dev Jr',
+      cpf: '99999999999',
+      nome: 'Test Employee',
+      ufnasc: 'RN',
+      salario: 8965.30,
+      status: Status.ATIVO
+    }
+    const fakeId = new ObjectID()
+    const response = await server.put(`/employees/${fakeId}`).send(data)
+    expect(response.status).toBe(200)
+    expect(response.body._id).toBeTruthy()
+  })
+
+  it('should update an employee', async () => {
+    const employee = (await Mongo.getCollection('employees').insertOne({
+      datacad: '13/11/2020',
+      cargo: 'Dev Jr',
+      cpf: '88888888888',
+      nome: 'Test Employee',
+      ufnasc: 'RN',
+      salario: 8965.30,
+      status: Status.BLOQUEADO
+    })).ops[0]
+
+    const data = {
+      datacad: '13/11/2020',
+      cargo: 'Dev Jr',
+      cpf: '88888888888',
+      nome: 'Test Employee Updated',
+      ufnasc: 'SP',
+      salario: 7000.30,
+      status: Status.ATIVO
+    }
+
+    const response = await server.put(`/employees/${employee._id}`).send(data)
+    expect(response.body.datacad).toEqual(data.datacad)
+    expect(response.body.cargo).toEqual(data.cargo)
+    expect(response.body.cpf).toEqual(data.cpf)
+    expect(response.body.nome).toEqual(data.nome)
+    expect(response.body.ufnasc).toEqual(data.ufnasc)
+    expect(response.body.salario).toEqual(data.salario)
+    expect(response.body.status).toEqual(data.status)
   })
 })
