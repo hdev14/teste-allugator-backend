@@ -8,9 +8,16 @@ describe('EmployeeService Unit Tests', () => {
   beforeAll(async () => {
     // Inicializa o Jest Mongo
     await Mongo.connect(process.env.MONGO_URL || '')
-    const employeesCollection = Mongo.getCollection('employees')
+  })
 
+  beforeEach(async () => {
+    const employeesCollection = Mongo.getCollection('employees')
     await employeesCollection.insertMany(employeesFixture)
+  })
+
+  afterEach(async () => {
+    const employeesCollection = Mongo.getCollection('employees')
+    await employeesCollection.deleteMany({})
   })
 
   afterAll(async () => {
@@ -165,5 +172,22 @@ describe('EmployeeService Unit Tests', () => {
     expect(updatedEmployee.ufnasc).toEqual(employeeUpdateData.ufnasc)
     expect(updatedEmployee.salario).toEqual(employeeUpdateData.salario)
     expect(updatedEmployee.status).toEqual(employeeUpdateData.status)
+  })
+
+  it('should delete an employee', async () => {
+    const employeeService = new EmployeeService()
+
+    const employee = (await Mongo.getCollection('employees').insertOne({
+      datacad: '13/11/2020',
+      cargo: 'Dev Jr',
+      cpf: '88888888888',
+      nome: 'Test Employee',
+      ufnasc: 'RN',
+      salario: 8965.30,
+      status: Status.BLOQUEADO
+    })).ops[0]
+
+    const result = await employeeService.deleteEmployeeByCPF(employee.cpf)
+    expect(result).toBe(true)
   })
 })
