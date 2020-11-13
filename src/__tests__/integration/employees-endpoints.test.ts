@@ -283,9 +283,4 @@ describe('Integration tests for employee endpoints', () => {
       message: 'Funcionário não encontrardo'
     })
   })
-
-  it('shouasdfld delete an employee', async () => {
-    const response = await server.delete(`/employees/${'59984408701'}`)
-    expect(response.status).toBe(200)
-  })
 })
