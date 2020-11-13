@@ -1,6 +1,8 @@
 import express, { Express } from 'express'
 import cors from 'cors'
 
+import globalErrorHandler from './middlewares/global-error-handler'
+
 import routes from './routes'
 
 class App {
@@ -15,6 +17,7 @@ class App {
   private globalMiddlewares () {
     this.server.use(express.json())
     this.server.use(cors())
+    this.server.use(globalErrorHandler)
   }
 
   private routes () {
