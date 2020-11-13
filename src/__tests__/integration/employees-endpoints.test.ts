@@ -109,4 +109,26 @@ describe('Integration tests for employee endpoints', () => {
       message: 'O filtro de data de cadastro é obrigatório'
     })
   })
+
+  it('should get a list of employee by UF', async () => {
+    let response = await server.get('/employees/uf').query({ uf: 'AP' }).send()
+    expect(response.status).toBe(200)
+    expect(response.body.count).toBe(1)
+
+    response = await server.get('/employees/uf').query({ uf: 'RS' }).send()
+    expect(response.status).toBe(200)
+    expect(response.body.count).toBe(2)
+
+    response = await server.get('/employees/uf').query({ uf: 'PR' }).send()
+    expect(response.status).toBe(200)
+    expect(response.body.count).toBe(1)
+  })
+
+  it('should return a error if UF is not passed', async () => {
+    const response = await server.get('/employees/uf').query({}).send()
+    expect(response.status).toBe(400)
+    expect(response.body).toEqual({
+      message: 'O filtro de UF é obrigatório'
+    })
+  })
 })
