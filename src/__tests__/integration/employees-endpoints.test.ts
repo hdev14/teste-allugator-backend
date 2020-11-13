@@ -57,4 +57,12 @@ describe('Integration tests for employee endpoints', () => {
     expect(response.status).toBe(200)
     expect(response.body.nome).toBe('Abbie Aagaard')
   })
+
+  it('should return a error if cpf is not passed', async () => {
+    const response = await server.get('/employees/cpf').query({}).send()
+    expect(response.status).toBe(400)
+    expect(response.body).toEqual({
+      message: 'O filtro de cpf é obrigatório'
+    })
+  })
 })
