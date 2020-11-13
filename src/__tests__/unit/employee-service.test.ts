@@ -104,11 +104,6 @@ describe('EmployeeService Unit Tests', () => {
     expect(employees.length).toBe(1)
   })
 
-  //   db.orders.aggregate([
-  //     { $match: { status: "A" } },
-  //     { $group: { _id: "$cust_id", total: { $sum: "$amount" } } }
-  //  ])
-
   it('should return a list of employees grouped by UF', async () => {
     const employeeService = new EmployeeService()
 
@@ -123,5 +118,30 @@ describe('EmployeeService Unit Tests', () => {
     employeesData = await employeeService.getEmployeesGroupedByUF('PR')
     expect(employeesData.employees).toBeTruthy()
     expect(employeesData.count).toBe(1)
+  })
+
+  it('should return a list of employees by salary', async () => {
+    const employeeService = new EmployeeService()
+
+    let employees = await employeeService.getEmployeesBySalary(8000, 9000)
+    expect(employees[0].nome).toBe('Aaron Aaberg')
+
+    employees = await employeeService.getEmployeesBySalary(5000, 6000)
+    expect(employees[0].nome).toBe('Aaron Aaby')
+
+    employees = await employeeService.getEmployeesBySalary(3000, 4000)
+    expect(employees[0].nome).toBe('Abbie Aagaard')
+
+    employees = await employeeService.getEmployeesBySalary(0, 1000)
+    expect(employees[0].nome).toBe('Adan Aarhus')
+
+    employees = await employeeService.getEmployeesBySalary(5000, 9000)
+    expect(employees.length).toBe(2)
+
+    employees = await employeeService.getEmployeesBySalary(0, 4000)
+    expect(employees.length).toBe(2)
+
+    employees = await employeeService.getEmployeesBySalary(0, 9000)
+    expect(employees.length).toBe(4)
   })
 })
