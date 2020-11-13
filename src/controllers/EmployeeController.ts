@@ -26,6 +26,13 @@ class EmployeeController {
     const employee = await EmployeeService.getEmployeeByCPF(cpf as string)
     return res.status(200).json(employee)
   }
+
+  public async getByRole (req: Request, res: Response) {
+    const { role } = req.query
+
+    const employees = await EmployeeService.getEmployeesByRole(role as string)
+    return res.status(200).json(employees)
+  }
 }
 
 export default new EmployeeController()
