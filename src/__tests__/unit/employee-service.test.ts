@@ -90,4 +90,17 @@ describe('EmployeeService Unit Tests', () => {
     const employeesWithRoleACSr = await employeeService.getEmployeesByRole('AC Sr')
     expect(employeesWithRolePOJr.length).toBe(1)
   })
+
+  it('should return a list of employees by register date', async () => {
+    const employeeService = new EmployeeService()
+
+    let employees = await employeeService.getEmployeesByRegisterDate('15/04/2017')
+    expect(employees.length).toBe(1)
+
+    employees = await employeeService.getEmployeesByRegisterDate('19/04/2017')
+    expect(employees.length).toBe(2)
+
+    employees = await employeeService.getEmployeesByRegisterDate('05/04/2017')
+    expect(employees.length).toBe(1)
+  })
 })
