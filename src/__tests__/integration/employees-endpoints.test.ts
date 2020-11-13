@@ -65,4 +65,18 @@ describe('Integration tests for employee endpoints', () => {
       message: 'O filtro de cpf é obrigatório'
     })
   })
+
+  it('should get a list of employee by role', async () => {
+    let response = await server.get('/employees/role').query({ role: 'Dev Jr' }).send()
+    expect(response.status).toBe(200)
+    expect(response.body.length).toBe(2)
+
+    response = await server.get('/employees/role').query({ role: 'PO Jr' }).send()
+    expect(response.status).toBe(200)
+    expect(response.body.length).toBe(1)
+
+    response = await server.get('/employees/role').query({ role: 'AC Sr' }).send()
+    expect(response.status).toBe(200)
+    expect(response.body.length).toBe(1)
+  })
 })
