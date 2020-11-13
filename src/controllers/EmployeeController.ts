@@ -99,6 +99,19 @@ class EmployeeController {
     const employee = await EmployeeService.createOrUpdateEmployee(employeeData, id)
     return res.status(200).json(employee)
   }
+
+  public async delete (req: Request, res: Response) {
+    const { cpf } = req.params
+    const result = await EmployeeService.deleteEmployeeByCPF(cpf)
+
+    if (!result) {
+      return res.status(400).json({
+        message: 'Funcionário não encontrardo'
+      })
+    }
+
+    return res.status(200)
+  }
 }
 
 export default new EmployeeController()
