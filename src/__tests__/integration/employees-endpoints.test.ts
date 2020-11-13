@@ -275,6 +275,20 @@ describe('Integration tests for employee endpoints', () => {
     expect(response.body.status).toEqual(data.status)
   })
 
+  it('should delete an employee', async () => {
+    const employee = (await Mongo.getCollection('employees').insertOne({
+      datacad: '13/11/2020',
+      cargo: 'Dev Jr',
+      cpf: '88888888888',
+      nome: 'Test Employee',
+      ufnasc: 'RN',
+      salario: 8965.30,
+      status: Status.BLOQUEADO
+    })).ops[0]
+    const response = await server.delete(`/employees/${employee.cpf}`)
+    expect(response.status).toBe(204)
+  })
+
   it('should return a error on delete if employee doesnt exist', async () => {
     const fakeCPF = '11111111111'
     const response = await server.delete(`/employees/${fakeCPF}`)
