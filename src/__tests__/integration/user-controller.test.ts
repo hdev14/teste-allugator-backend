@@ -6,6 +6,7 @@ describe('News intagration tests', () => {
   let server: supertest.SuperTest<supertest.Test>
 
   beforeAll(async () => {
+    // Inicializa o Jest Mongo
     await Mongo.connect(process.env.MONGO_URL || '')
     server = supertest(App.server)
   })
