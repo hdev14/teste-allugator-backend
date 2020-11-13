@@ -1,6 +1,8 @@
 import Mongo from '../database/Mongo'
 import { getEmployeesData } from '../helpers'
 
+type Status = 'ATIVO' | 'BLOQUEADO'
+
 class EmployeeService {
   public async getEmployeesByName (name: string) {
     const employeesCollection = Mongo.getCollection('employees')
@@ -44,6 +46,12 @@ class EmployeeService {
     const employees = await employeesCollection.aggregate([
       { $match: { salario: { $gt: min, $lt: max } } }
     ]).toArray()
+    return employees
+  }
+
+  public async getEmployeesByStatus (status: Status) {
+    const employeesCollection = Mongo.getCollection('employees')
+    const employees = await employeesCollection.find({ status: status }).toArray()
     return employees
   }
 }
