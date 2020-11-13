@@ -10,5 +10,6 @@ router.get('/employees/role', EmployeeController.getByRole)
 router.get('/employees/register-date', EmployeeController.getByRegisterDate)
 router.get('/employees/uf', EmployeeController.getByUF)
 router.get('/employees/salary', EmployeeController.getBySalary)
+router.get('/employees/status', EmployeeController.getByStatus)
 
 export default router

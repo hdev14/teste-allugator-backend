@@ -1,5 +1,6 @@
 import { Request, Response } from 'express'
 import EmployeeService from '../services/EmployeeService'
+import { Status } from '../types'
 
 class EmployeeController {
   public async getByName (req: Request, res: Response) {
@@ -76,6 +77,19 @@ class EmployeeController {
     }
 
     const employees = await EmployeeService.getEmployeesBySalary(Number(min), Number(max))
+    return res.status(200).json(employees)
+  }
+
+  public async getByStatus (req: Request, res: Response) {
+    const { status } = req.query
+
+    if (!status) {
+      return res.status(400).json({
+        message: 'O filtro de status é obrigatório'
+      })
+    }
+
+    const employees = await EmployeeService.getEmployeesByStatus(status as Status)
     return res.status(200).json(employees)
   }
 }
