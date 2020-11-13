@@ -144,4 +144,14 @@ describe('EmployeeService Unit Tests', () => {
     employees = await employeeService.getEmployeesBySalary(0, 9000)
     expect(employees.length).toBe(4)
   })
+
+  it('should return a list of employees by status', async () => {
+    const employeeService = new EmployeeService()
+
+    let employees = await employeeService.getEmployeesByStatus('ATIVO')
+    expect(employees.length).toBe(3)
+
+    employees = await employeeService.getEmployeesByStatus('BLOQUEADO')
+    expect(employees.length).toBe(1)
+  })
 })
