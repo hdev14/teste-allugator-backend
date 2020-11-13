@@ -131,4 +131,64 @@ describe('Integration tests for employee endpoints', () => {
       message: 'O filtro de UF é obrigatório'
     })
   })
+
+  it('should get a list of employee by salary', async () => {
+    let response = await server.get('/employees/salary').query({
+      min: 8000, max: 9000
+    }).send()
+    expect(response.status).toBe(200)
+    expect(response.body[0].nome).toBe('Aaron Aaberg')
+
+    response = await server.get('/employees/salary').query({
+      min: 5000, max: 6000
+    }).send()
+    expect(response.status).toBe(200)
+    expect(response.body[0].nome).toBe('Aaron Aaby')
+
+    response = await server.get('/employees/salary').query({
+      min: 3000, max: 4000
+    }).send()
+    expect(response.status).toBe(200)
+    expect(response.body[0].nome).toBe('Abbie Aagaard')
+
+    response = await server.get('/employees/salary').query({
+      min: 0, max: 1000
+    }).send()
+    expect(response.status).toBe(200)
+    expect(response.body[0].nome).toBe('Adan Aarhus')
+
+    response = await server.get('/employees/salary').query({
+      min: 5000, max: 9000
+    }).send()
+    expect(response.status).toBe(200)
+    expect(response.body.length).toBe(2)
+
+    response = await server.get('/employees/salary').query({
+      min: 0, max: 4000
+    }).send()
+    expect(response.status).toBe(200)
+    expect(response.body.length).toBe(2)
+
+    response = await server.get('/employees/salary').query({
+      min: 0, max: 9000
+    }).send()
+    expect(response.status).toBe(200)
+    expect(response.body.length).toBe(4)
+  })
+
+  it('should return a error if max is not passed', async () => {
+    const response = await server.get('/employees/salary').query({}).send()
+    expect(response.status).toBe(400)
+    expect(response.body).toEqual({
+      message: 'Os filtros de faixa salarial são obrigatório'
+    })
+  })
+
+  it('should return a error if min is not passed', async () => {
+    const response = await server.get('/employees/salary').query({}).send()
+    expect(response.status).toBe(400)
+    expect(response.body).toEqual({
+      message: 'Os filtros de faixa salarial são obrigatório'
+    })
+  })
 })
