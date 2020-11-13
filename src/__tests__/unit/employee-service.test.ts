@@ -1,50 +1,14 @@
 import Mongo from '../../database/Mongo'
 import EmployeeService from '../../services/EmployeeService'
+import employeesFixture from '../employees-fixture.json'
 
 describe('EmployeeService Unit Tests', () => {
   beforeAll(async () => {
     // Inicializa o Jest Mongo
     await Mongo.connect(process.env.MONGO_URL || '')
     const employeesCollection = Mongo.getCollection('employees')
-    // Dados para teste
-    await employeesCollection.insertMany([
-      {
-        datacad: '15/04/2017',
-        cargo: 'Dev Jr',
-        cpf: '85235708709',
-        nome: 'Aaron Aaberg',
-        ufnasc: 'AP',
-        salario: 8965.30,
-        status: 'ATIVO'
-      },
-      {
-        datacad: '19/04/2017',
-        cargo: 'AC Sr',
-        cpf: '59984408701',
-        nome: 'Aaron Aaby',
-        ufnasc: 'RS',
-        salario: 5312.70,
-        status: 'ATIVO'
-      },
-      {
-        datacad: '19/04/2017',
-        cargo: 'PO Jr',
-        cpf: '32439637882',
-        nome: 'Abbie Aagaard',
-        ufnasc: 'PR',
-        salario: 3655.10,
-        status: 'BLOQUEADO'
-      },
-      {
-        datacad: '05/04/2017',
-        cargo: 'Dev Jr',
-        cpf: '96129441991',
-        nome: 'Adan Aarhus',
-        ufnasc: 'RS',
-        salario: 789.20,
-        status: 'ATIVO'
-      }
-    ])
+
+    await employeesCollection.insertMany(employeesFixture)
   })
 
   afterEach(async () => {
