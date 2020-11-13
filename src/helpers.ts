@@ -16,7 +16,10 @@ export function getEmployeesData () {
     const columnHeader = headers[i].toLocaleLowerCase()
 
     for (let j = 1; j < lines.length; j++) {
-      const columnValue = lines[j].split(';')[i]
+      const columnValue = columnHeader === 'salario'
+        ? Number(lines[j].split(';')[i])
+        : lines[j].split(';')[i]
+
       const dataIndex = j - 1
 
       if (data[dataIndex]) {
