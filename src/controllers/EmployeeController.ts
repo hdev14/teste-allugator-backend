@@ -52,6 +52,19 @@ class EmployeeController {
     const employees = await EmployeeService.getEmployeesByRegisterDate(date as string)
     return res.status(200).json(employees)
   }
+
+  public async getByUF (req: Request, res: Response) {
+    const { uf } = req.query
+
+    if (!uf) {
+      return res.status(400).json({
+        message: 'O filtro de UF é obrigatório'
+      })
+    }
+
+    const data = await EmployeeService.getEmployeesGroupedByUF(uf as string)
+    return res.status(200).json(data)
+  }
 }
 
 export default new EmployeeController()
