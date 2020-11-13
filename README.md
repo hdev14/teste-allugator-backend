@@ -22,13 +22,12 @@
 
 Para iniciar esse projeto é necessário primeiramente instalar todas as dependências e tecnologias para executar o ambiente de desenvolvimento.
 
-- [Node](https://nodejs.org/en/) & NPM/[Yarn](https://yarnpkg.com/)
+- [Node & NPM](https://nodejs.org/en/)
 - [Docker](https://docs.docker.com/engine/install/) & [Docker-compose](https://docs.docker.com/compose/install/)
 
 ### Instalar dependências
 
 ```sh
-# Instalar com NPM
 $ npm install
 ```
 
