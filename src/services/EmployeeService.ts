@@ -3,7 +3,7 @@ import Mongo from '../database/Mongo'
 class EmployeeService {
   public async getEmployeesByName (name: string) {
     const employeesCollection = Mongo.getCollection('employees')
-    const nameFilterRegExp = new RegExp(name)
+    const nameFilterRegExp = new RegExp(name, 'i')
     const employees = await employeesCollection.find({ nome: nameFilterRegExp }).toArray()
     return employees
   }
@@ -12,6 +12,13 @@ class EmployeeService {
     const employeesCollection = Mongo.getCollection('employees')
     const employee = await employeesCollection.findOne({ cpf: cpf })
     return employee
+  }
+
+  public async getEmployeesByRole (role: string) {
+    const employeesCollection = Mongo.getCollection('employees')
+    const roleFilterRegExp = new RegExp(role, 'i')
+    const employees = await employeesCollection.find({ cargo: roleFilterRegExp }).toArray()
+    return employees
   }
 }
 
