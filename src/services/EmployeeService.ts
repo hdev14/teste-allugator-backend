@@ -65,6 +65,13 @@ class EmployeeService {
 
     return result.value
   }
+
+  public async deleteEmployeeByCPF (cpf: string) {
+    const employeesCollection = Mongo.getCollection('employees')
+    const { result } = await employeesCollection.deleteOne({ cpf })
+
+    return result.ok && result.n > 0
+  }
 }
 
 export default EmployeeService
