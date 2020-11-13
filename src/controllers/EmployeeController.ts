@@ -16,6 +16,13 @@ class EmployeeController {
 
   public async getByCPF (req: Request, res: Response) {
     const { cpf } = req.query
+
+    if (!cpf) {
+      return res.status(400).json({
+        message: 'O filtro de cpf é obrigatório'
+      })
+    }
+
     const employee = await EmployeeService.getEmployeeByCPF(cpf as string)
     return res.status(200).json(employee)
   }
