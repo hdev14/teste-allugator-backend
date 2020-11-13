@@ -39,6 +39,12 @@ class EmployeeController {
     const employees = await EmployeeService.getEmployeesByRole(role as string)
     return res.status(200).json(employees)
   }
+
+  public async getByRegisterDate (req: Request, res: Response) {
+    const { date } = req.query
+    const employees = await EmployeeService.getEmployeesByRegisterDate(date as string)
+    return res.status(200).json(employees)
+  }
 }
 
 export default new EmployeeController()
