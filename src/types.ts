@@ -4,11 +4,11 @@ export enum Status {
 }
 
 export type EmployeeData = {
-  datacad: string,
-  cargo: string,
-  cpf: string,
-  nome: string,
-  ufnasc: string,
-  salario: number,
-  status: Status
+  datacad?: string,
+  cargo?: string,
+  cpf?: string,
+  nome?: string,
+  ufnasc?: string,
+  salario?: number,
+  status?: Status
 }

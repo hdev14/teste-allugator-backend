@@ -1,7 +1,7 @@
+import { ObjectID } from 'mongodb'
 import Mongo from '../database/Mongo'
-import { getEmployeesData } from '../helpers'
 
-type Status = 'ATIVO' | 'BLOQUEADO'
+import { EmployeeData, Status } from '../types'
 
 class EmployeeService {
   public async getEmployeesByName (name: string) {
@@ -53,6 +53,17 @@ class EmployeeService {
     const employeesCollection = Mongo.getCollection('employees')
     const employees = await employeesCollection.find({ status: status }).toArray()
     return employees
+  }
+
+  public async createOrUpdateEmployee (employeeData: EmployeeData, id: string) {
+    const employeesCollection = Mongo.getCollection('employees')
+    const result = await employeesCollection.findOneAndUpdate(
+      { _id: new ObjectID(id) },
+      { $set: employeeData },
+      { upsert: true, returnOriginal: false }
+    )
+
+    return result.value
   }
 }
 
