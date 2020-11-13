@@ -25,108 +25,92 @@ describe('EmployeeService Unit Tests', () => {
   })
 
   it('should return a list of employee by name', async () => {
-    const employeeService = new EmployeeService()
-
-    const employeesWithFirstNameAaron = await employeeService.getEmployeesByName('Aaron')
+    const employeesWithFirstNameAaron = await EmployeeService.getEmployeesByName('Aaron')
     expect(employeesWithFirstNameAaron.length).toBe(2)
 
-    const employeesWithFirstNameAbbie = await employeeService.getEmployeesByName('Abbie')
+    const employeesWithFirstNameAbbie = await EmployeeService.getEmployeesByName('Abbie')
     expect(employeesWithFirstNameAbbie.length).toBe(1)
   })
 
   it('should return an employee by cpf', async () => {
-    const employeeService = new EmployeeService()
-
-    let employee = await employeeService.getEmployeeByCPF('85235708709')
+    let employee = await EmployeeService.getEmployeeByCPF('85235708709')
     expect(employee.nome).toBe('Aaron Aaberg')
 
-    employee = await employeeService.getEmployeeByCPF('59984408701')
+    employee = await EmployeeService.getEmployeeByCPF('59984408701')
     expect(employee.nome).toBe('Aaron Aaby')
 
-    employee = await employeeService.getEmployeeByCPF('32439637882')
+    employee = await EmployeeService.getEmployeeByCPF('32439637882')
     expect(employee.nome).toBe('Abbie Aagaard')
   })
 
   it('should return a list of employees by role', async () => {
-    const employeeService = new EmployeeService()
-
-    const employeesWithRoleDevJr = await employeeService.getEmployeesByRole('Dev Jr')
+    const employeesWithRoleDevJr = await EmployeeService.getEmployeesByRole('Dev Jr')
     expect(employeesWithRoleDevJr.length).toBe(2)
 
-    const employeesWithRolePOJr = await employeeService.getEmployeesByRole('PO Jr')
+    const employeesWithRolePOJr = await EmployeeService.getEmployeesByRole('PO Jr')
     expect(employeesWithRolePOJr.length).toBe(1)
 
-    const employeesWithRoleACSr = await employeeService.getEmployeesByRole('AC Sr')
+    const employeesWithRoleACSr = await EmployeeService.getEmployeesByRole('AC Sr')
     expect(employeesWithRolePOJr.length).toBe(1)
   })
 
   it('should return a list of employees by register date', async () => {
-    const employeeService = new EmployeeService()
-
-    let employees = await employeeService.getEmployeesByRegisterDate('15/04/2017')
+    let employees = await EmployeeService.getEmployeesByRegisterDate('15/04/2017')
     expect(employees.length).toBe(1)
 
-    employees = await employeeService.getEmployeesByRegisterDate('19/04/2017')
+    employees = await EmployeeService.getEmployeesByRegisterDate('19/04/2017')
     expect(employees.length).toBe(2)
 
-    employees = await employeeService.getEmployeesByRegisterDate('05/04/2017')
+    employees = await EmployeeService.getEmployeesByRegisterDate('05/04/2017')
     expect(employees.length).toBe(1)
   })
 
   it('should return a list of employees grouped by UF', async () => {
-    const employeeService = new EmployeeService()
-
-    let employeesData = await employeeService.getEmployeesGroupedByUF('AP')
+    let employeesData = await EmployeeService.getEmployeesGroupedByUF('AP')
     expect(employeesData.employees).toBeTruthy()
     expect(employeesData.count).toBe(1)
 
-    employeesData = await employeeService.getEmployeesGroupedByUF('RS')
+    employeesData = await EmployeeService.getEmployeesGroupedByUF('RS')
     expect(employeesData.employees).toBeTruthy()
     expect(employeesData.count).toBe(2)
 
-    employeesData = await employeeService.getEmployeesGroupedByUF('PR')
+    employeesData = await EmployeeService.getEmployeesGroupedByUF('PR')
     expect(employeesData.employees).toBeTruthy()
     expect(employeesData.count).toBe(1)
   })
 
   it('should return a list of employees by salary', async () => {
-    const employeeService = new EmployeeService()
-
-    let employees = await employeeService.getEmployeesBySalary(8000, 9000)
+    let employees = await EmployeeService.getEmployeesBySalary(8000, 9000)
     expect(employees[0].nome).toBe('Aaron Aaberg')
 
-    employees = await employeeService.getEmployeesBySalary(5000, 6000)
+    employees = await EmployeeService.getEmployeesBySalary(5000, 6000)
     expect(employees[0].nome).toBe('Aaron Aaby')
 
-    employees = await employeeService.getEmployeesBySalary(3000, 4000)
+    employees = await EmployeeService.getEmployeesBySalary(3000, 4000)
     expect(employees[0].nome).toBe('Abbie Aagaard')
 
-    employees = await employeeService.getEmployeesBySalary(0, 1000)
+    employees = await EmployeeService.getEmployeesBySalary(0, 1000)
     expect(employees[0].nome).toBe('Adan Aarhus')
 
-    employees = await employeeService.getEmployeesBySalary(5000, 9000)
+    employees = await EmployeeService.getEmployeesBySalary(5000, 9000)
     expect(employees.length).toBe(2)
 
-    employees = await employeeService.getEmployeesBySalary(0, 4000)
+    employees = await EmployeeService.getEmployeesBySalary(0, 4000)
     expect(employees.length).toBe(2)
 
-    employees = await employeeService.getEmployeesBySalary(0, 9000)
+    employees = await EmployeeService.getEmployeesBySalary(0, 9000)
     expect(employees.length).toBe(4)
   })
 
   it('should return a list of employees by status', async () => {
-    const employeeService = new EmployeeService()
-
-    let employees = await employeeService.getEmployeesByStatus(Status.ATIVO)
+    let employees = await EmployeeService.getEmployeesByStatus(Status.ATIVO)
     expect(employees.length).toBe(3)
 
-    employees = await employeeService.getEmployeesByStatus(Status.BLOQUEADO)
+    employees = await EmployeeService.getEmployeesByStatus(Status.BLOQUEADO)
     expect(employees.length).toBe(1)
   })
 
   it('should create an employee', async () => {
-    const employeeService = new EmployeeService()
-
     const employeeData: EmployeeData = {
       datacad: '13/11/2020',
       cargo: 'Dev Jr',
@@ -137,13 +121,11 @@ describe('EmployeeService Unit Tests', () => {
       status: Status.ATIVO
     }
 
-    const newEmployee = await employeeService.createOrUpdateEmployee(employeeData, null)
+    const newEmployee = await EmployeeService.createOrUpdateEmployee(employeeData, null)
     expect(newEmployee._id).toBeTruthy()
   })
 
   it('should update an employee', async () => {
-    const employeeService = new EmployeeService()
-
     const employee = (await Mongo.getCollection('employees').insertOne({
       datacad: '13/11/2020',
       cargo: 'Dev Jr',
@@ -164,7 +146,7 @@ describe('EmployeeService Unit Tests', () => {
       status: Status.ATIVO
     }
 
-    const updatedEmployee = await employeeService.createOrUpdateEmployee(employeeUpdateData, employee._id)
+    const updatedEmployee = await EmployeeService.createOrUpdateEmployee(employeeUpdateData, employee._id)
     expect(updatedEmployee.datacad).toEqual(employeeUpdateData.datacad)
     expect(updatedEmployee.cargo).toEqual(employeeUpdateData.cargo)
     expect(updatedEmployee.cpf).toEqual(employeeUpdateData.cpf)
@@ -175,8 +157,6 @@ describe('EmployeeService Unit Tests', () => {
   })
 
   it('should delete an employee', async () => {
-    const employeeService = new EmployeeService()
-
     const employee = (await Mongo.getCollection('employees').insertOne({
       datacad: '13/11/2020',
       cargo: 'Dev Jr',
@@ -187,7 +167,7 @@ describe('EmployeeService Unit Tests', () => {
       status: Status.BLOQUEADO
     })).ops[0]
 
-    const result = await employeeService.deleteEmployeeByCPF(employee.cpf)
+    const result = await EmployeeService.deleteEmployeeByCPF(employee.cpf)
     expect(result).toBe(true)
   })
 })
