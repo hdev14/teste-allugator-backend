@@ -30,6 +30,12 @@ class EmployeeController {
   public async getByRole (req: Request, res: Response) {
     const { role } = req.query
 
+    if (!role) {
+      return res.status(400).json({
+        message: 'O filtro de cargo é obrigatório'
+      })
+    }
+
     const employees = await EmployeeService.getEmployeesByRole(role as string)
     return res.status(200).json(employees)
   }
