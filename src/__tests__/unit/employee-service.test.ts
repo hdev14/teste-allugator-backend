@@ -34,6 +34,15 @@ describe('EmployeeService Unit Tests', () => {
         ufnasc: 'PR',
         salario: 3655.10,
         status: 'BLOQUEADO'
+      },
+      {
+        datacad: '05/04/2017',
+        cargo: 'Dev Jr',
+        cpf: '96129441991',
+        nome: 'Adan Aarhus',
+        ufnasc: 'RS',
+        salario: 789.20,
+        status: 'ATIVO'
       }
     ])
   })
@@ -46,7 +55,7 @@ describe('EmployeeService Unit Tests', () => {
     await Mongo.disconnect()
   })
 
-  it('should return an employee by name', async () => {
+  it('should return a list of employee by name', async () => {
     const employeeService = new EmployeeService()
 
     const employeesWithFirstNameAaron = await employeeService.getEmployeesByName('Aaron')
@@ -56,7 +65,7 @@ describe('EmployeeService Unit Tests', () => {
     expect(employeesWithFirstNameAbbie.length).toBe(1)
   })
 
-  it('should return an employee by name', async () => {
+  it('should return an employee by cpf', async () => {
     const employeeService = new EmployeeService()
 
     let employee = await employeeService.getEmployeeByCPF('85235708709')
@@ -67,5 +76,18 @@ describe('EmployeeService Unit Tests', () => {
 
     employee = await employeeService.getEmployeeByCPF('32439637882')
     expect(employee.nome).toBe('Abbie Aagaard')
+  })
+
+  it('should return a list of employees by role', async () => {
+    const employeeService = new EmployeeService()
+
+    const employeesWithRoleDevJr = await employeeService.getEmployeesByRole('Dev Jr')
+    expect(employeesWithRoleDevJr.length).toBe(2)
+
+    const employeesWithRolePOJr = await employeeService.getEmployeesByRole('PO Jr')
+    expect(employeesWithRolePOJr.length).toBe(1)
+
+    const employeesWithRoleACSr = await employeeService.getEmployeesByRole('AC Sr')
+    expect(employeesWithRolePOJr.length).toBe(1)
   })
 })
