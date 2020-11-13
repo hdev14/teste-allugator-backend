@@ -1,4 +1,5 @@
 import Mongo from '../database/Mongo'
+import { getEmployeesData } from '../helpers'
 
 class EmployeeService {
   public async getEmployeesByName (name: string) {
@@ -25,6 +26,17 @@ class EmployeeService {
     const employeesCollection = Mongo.getCollection('employees')
     const employees = await employeesCollection.find({ datacad: date }).toArray()
     return employees
+  }
+
+  public async getEmployeesGroupedByUF (uf: string) {
+    const employeesCollection = Mongo.getCollection('employees')
+    const employees = await employeesCollection.aggregate([
+      { $match: { ufnasc: uf } }
+    ]).toArray()
+    return {
+      employees,
+      count: employees.length
+    }
   }
 }
 
