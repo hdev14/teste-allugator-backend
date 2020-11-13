@@ -274,4 +274,18 @@ describe('Integration tests for employee endpoints', () => {
     expect(response.body.salario).toEqual(data.salario)
     expect(response.body.status).toEqual(data.status)
   })
+
+  it('should return a error if employee doesnt exist', async () => {
+    const fakeCPF = '11111111111'
+    const response = await server.delete(`/employees/${fakeCPF}`)
+    expect(response.status).toBe(400)
+    expect(response.body).toEqual({
+      message: 'Funcionário não encontrardo'
+    })
+  })
+
+  it('shouasdfld delete an employee', async () => {
+    const response = await server.delete(`/employees/${'59984408701'}`)
+    expect(response.status).toBe(200)
+  })
 })
