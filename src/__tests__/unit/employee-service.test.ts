@@ -22,7 +22,7 @@ describe('EmployeeService Unit Tests', () => {
         cargo: 'AC Sr',
         cpf: '59984408701',
         nome: 'Aaron Aaby',
-        ufnasc: 'RO',
+        ufnasc: 'RS',
         salario: 5312.70,
         status: 'ATIVO'
       },
@@ -102,5 +102,26 @@ describe('EmployeeService Unit Tests', () => {
 
     employees = await employeeService.getEmployeesByRegisterDate('05/04/2017')
     expect(employees.length).toBe(1)
+  })
+
+  //   db.orders.aggregate([
+  //     { $match: { status: "A" } },
+  //     { $group: { _id: "$cust_id", total: { $sum: "$amount" } } }
+  //  ])
+
+  it('should return a list of employees grouped by UF', async () => {
+    const employeeService = new EmployeeService()
+
+    let employeesData = await employeeService.getEmployeesGroupedByUF('AP')
+    expect(employeesData.employees).toBeTruthy()
+    expect(employeesData.count).toBe(1)
+
+    employeesData = await employeeService.getEmployeesGroupedByUF('RS')
+    expect(employeesData.employees).toBeTruthy()
+    expect(employeesData.count).toBe(2)
+
+    employeesData = await employeeService.getEmployeesGroupedByUF('PR')
+    expect(employeesData.employees).toBeTruthy()
+    expect(employeesData.count).toBe(1)
   })
 })
