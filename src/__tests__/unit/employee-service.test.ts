@@ -9,31 +9,31 @@ describe('EmployeeService Unit Tests', () => {
     // Dados para teste
     await employeesCollection.insertMany([
       {
-        DataCad: '15/04/2017',
-        Cargo: 'Dev Jr',
-        Cpf: '85235708709',
-        Nome: 'Aaron Aaberg',
-        UfNasc: 'AP',
-        Salario: 8965.30,
-        Status: 'ATIVO'
+        datacad: '15/04/2017',
+        cargo: 'Dev Jr',
+        cpf: '85235708709',
+        nome: 'Aaron Aaberg',
+        ufnasc: 'AP',
+        salario: 8965.30,
+        status: 'ATIVO'
       },
       {
-        DataCad: '19/04/2017',
-        Cargo: 'AC Sr',
-        Cpf: '59984408701',
-        Nome: 'Aaron Aaby',
-        UfNasc: 'RO',
-        Salario: 5312.70,
-        Status: 'ATIVO'
+        datacad: '19/04/2017',
+        cargo: 'AC Sr',
+        cpf: '59984408701',
+        nome: 'Aaron Aaby',
+        ufnasc: 'RO',
+        salario: 5312.70,
+        status: 'ATIVO'
       },
       {
-        DataCad: '19/04/2017',
-        Cargo: 'PO Jr',
-        Cpf: '32439637882',
-        Nome: 'Abbie Aagaard',
-        UfNasc: 'PR',
-        Salario: 3655.10,
-        Status: 'BLOQUEADO'
+        datacad: '19/04/2017',
+        cargo: 'PO Jr',
+        cpf: '32439637882',
+        nome: 'Abbie Aagaard',
+        ufnasc: 'PR',
+        salario: 3655.10,
+        status: 'BLOQUEADO'
       }
     ])
   })
@@ -59,13 +59,13 @@ describe('EmployeeService Unit Tests', () => {
   it('should return an employee by name', async () => {
     const employeeService = new EmployeeService()
 
-    let employee = await employeeService.getEmployeesByCPF('85235708709')
-    expect(employee.Nome).toBe('Aaron Aaberg')
+    let employee = await employeeService.getEmployeeByCPF('85235708709')
+    expect(employee.nome).toBe('Aaron Aaberg')
 
-    employee = await employeeService.getEmployeesByCPF('59984408701')
-    expect(employee.Nome).toBe('Aaron Aaby')
+    employee = await employeeService.getEmployeeByCPF('59984408701')
+    expect(employee.nome).toBe('Aaron Aaby')
 
-    employee = await employeeService.getEmployeesByCPF('32439637882')
-    expect(employee.Nome).toBe('Abbie Aagaard')
+    employee = await employeeService.getEmployeeByCPF('32439637882')
+    expect(employee.nome).toBe('Abbie Aagaard')
   })
 })
