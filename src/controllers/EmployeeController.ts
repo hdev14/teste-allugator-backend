@@ -42,6 +42,13 @@ class EmployeeController {
 
   public async getByRegisterDate (req: Request, res: Response) {
     const { date } = req.query
+
+    if (!date) {
+      return res.status(400).json({
+        message: 'O filtro de data de cadastro é obrigatório'
+      })
+    }
+
     const employees = await EmployeeService.getEmployeesByRegisterDate(date as string)
     return res.status(200).json(employees)
   }
