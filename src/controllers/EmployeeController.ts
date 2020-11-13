@@ -65,6 +65,19 @@ class EmployeeController {
     const data = await EmployeeService.getEmployeesGroupedByUF(uf as string)
     return res.status(200).json(data)
   }
+
+  public async getBySalary (req: Request, res: Response) {
+    const { min, max } = req.query
+
+    if (!min && !max) {
+      return res.status(400).json({
+        message: 'Os filtros de faixa salarial são obrigatório'
+      })
+    }
+
+    const employees = await EmployeeService.getEmployeesBySalary(Number(min), Number(max))
+    return res.status(200).json(employees)
+  }
 }
 
 export default new EmployeeController()
