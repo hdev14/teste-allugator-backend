@@ -11,10 +11,6 @@ describe('EmployeeService Unit Tests', () => {
     await employeesCollection.insertMany(employeesFixture)
   })
 
-  afterEach(async () => {
-    await Mongo.getCollection('news').deleteMany({})
-  })
-
   afterAll(async () => {
     await Mongo.disconnect()
   })
