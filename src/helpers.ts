@@ -13,10 +13,10 @@ export function getEmployeesData () {
   const data = []
 
   for (let i = 0; i < headers.length; i++) {
-    for (let j = 1; j < lines.length; j++) {
-      const columnHeader = headers[i]
-      const columnValue = lines[j].split(';')[i]
+    const columnHeader = headers[i].toLocaleLowerCase()
 
+    for (let j = 1; j < lines.length; j++) {
+      const columnValue = lines[j].split(';')[i]
       const dataIndex = j - 1
 
       if (data[dataIndex]) {
