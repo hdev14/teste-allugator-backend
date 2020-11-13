@@ -275,7 +275,7 @@ describe('Integration tests for employee endpoints', () => {
     expect(response.body.status).toEqual(data.status)
   })
 
-  it('should return a error if employee doesnt exist', async () => {
+  it('should return a error on delete if employee doesnt exist', async () => {
     const fakeCPF = '11111111111'
     const response = await server.delete(`/employees/${fakeCPF}`)
     expect(response.status).toBe(400)
