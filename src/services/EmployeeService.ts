@@ -8,12 +8,14 @@ class EmployeeService {
     const employeesCollection = Mongo.getCollection('employees')
     const nameFilterRegExp = new RegExp(name, 'i')
     const employees = await employeesCollection.find({ nome: nameFilterRegExp }).toArray()
+
     return employees
   }
 
   public static async getEmployeeByCPF (cpf: string) {
     const employeesCollection = Mongo.getCollection('employees')
     const employee = await employeesCollection.findOne({ cpf: cpf })
+
     return employee
   }
 
@@ -21,12 +23,14 @@ class EmployeeService {
     const employeesCollection = Mongo.getCollection('employees')
     const roleFilterRegExp = new RegExp(role, 'i')
     const employees = await employeesCollection.find({ cargo: roleFilterRegExp }).toArray()
+
     return employees
   }
 
   public static async getEmployeesByRegisterDate (date: string) {
     const employeesCollection = Mongo.getCollection('employees')
     const employees = await employeesCollection.find({ datacad: date }).toArray()
+
     return employees
   }
 
@@ -35,6 +39,7 @@ class EmployeeService {
     const employees = await employeesCollection.aggregate([
       { $match: { ufnasc: uf } }
     ]).toArray()
+
     return {
       employees,
       count: employees.length
@@ -46,12 +51,14 @@ class EmployeeService {
     const employees = await employeesCollection.aggregate([
       { $match: { salario: { $gte: min, $lte: max } } }
     ]).toArray()
+
     return employees
   }
 
   public static async getEmployeesByStatus (status: Status) {
     const employeesCollection = Mongo.getCollection('employees')
     const employees = await employeesCollection.find({ status: status }).toArray()
+
     return employees
   }
 
@@ -69,6 +76,7 @@ class EmployeeService {
   public static async deleteEmployeeByCPF (cpf: string) {
     const employeesCollection = Mongo.getCollection('employees')
     const result = await employeesCollection.findOneAndDelete({ cpf: cpf })
+
     return result.ok && result.lastErrorObject.n > 0
   }
 }
