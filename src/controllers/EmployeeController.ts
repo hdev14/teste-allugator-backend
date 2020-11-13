@@ -92,6 +92,13 @@ class EmployeeController {
     const employees = await EmployeeService.getEmployeesByStatus(status as Status)
     return res.status(200).json(employees)
   }
+
+  public async createOrUpdate (req: Request, res: Response) {
+    const { id } = req.params
+    const employeeData = req.body
+    const employee = await EmployeeService.createOrUpdateEmployee(employeeData, id)
+    return res.status(200).json(employee)
+  }
 }
 
 export default new EmployeeController()
