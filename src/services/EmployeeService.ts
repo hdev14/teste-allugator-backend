@@ -38,6 +38,14 @@ class EmployeeService {
       count: employees.length
     }
   }
+
+  public async getEmployeesBySalary (min: number, max: number) {
+    const employeesCollection = Mongo.getCollection('employees')
+    const employees = await employeesCollection.aggregate([
+      { $match: { salario: { $gt: min, $lt: max } } }
+    ]).toArray()
+    return employees
+  }
 }
 
 export default EmployeeService
