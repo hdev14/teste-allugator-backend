@@ -1,5 +1,9 @@
 <h1 align="center"> Teste Allugator (Backend)</h1>
 
+# Solução
+
+Minha proposta para esse teste foi desenvolver um endpoint para cada tipo de filtro especifico e para as outras operações (PUT/DELETE). Eu pensei incialmente em colocar as requisições do tipo GET em apenas um endpoint (GET:/employees), porém pensei melhor, e um único endpoint recebendo muitos filtros é considerado uma má prática. Para continuar seguindo o estilo arquitural REST definir um subpath especificando qual seria o tipo do filtro, por exemplo, ```/employees/uf``` que é destinado a fazer consultas por UF de nascimento do funcionário.
+
 # Uso
 
 ## Pre-requisitos
