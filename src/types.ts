@@ -4,6 +4,7 @@ export enum Status {
 }
 
 export type EmployeeData = {
+  _id?: string,
   datacad?: string,
   cargo?: string,
   cpf?: string,

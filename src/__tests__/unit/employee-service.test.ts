@@ -6,7 +6,11 @@ import { EmployeeData, Status } from '../../types'
 
 describe('EmployeeService Unit Tests', () => {
   beforeAll(async () => {
-    // Inicializa o Jest Mongo
+    /** Um mock do mongo seria a melhor escolha para testes de unidade,
+     * porém não existe uma maneira de fazer isso corretamente,
+     * por isso a própria doc do jest indica o uso do jest-mongo
+     * para qualquer tipo de teste.
+     */
     await Mongo.connect(process.env.MONGO_URL || '')
   })
 
@@ -169,5 +173,11 @@ describe('EmployeeService Unit Tests', () => {
 
     const result = await EmployeeService.deleteEmployeeByCPF(employee.cpf)
     expect(result).toBe(true)
+  })
+
+  it('should return false on delete if employee doesnt exist', async () => {
+    const fakeCPF = '11111111111'
+    const result = await EmployeeService.deleteEmployeeByCPF(fakeCPF)
+    expect(result).toBe(false)
   })
 })
