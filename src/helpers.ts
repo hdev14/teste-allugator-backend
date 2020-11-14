@@ -10,29 +10,29 @@ export function getEmployeesData () {
   const lines = fileContent.split('\n')
   const headers = lines[0].split(';')
 
-  const data = []
+  const employees = []
 
   for (let i = 0; i < headers.length; i++) {
-    const columnHeader = headers[i].toLocaleLowerCase()
+    const columnHeader = headers[i].toLowerCase()
 
     for (let j = 1; j < lines.length; j++) {
       const columnValue = columnHeader === 'salario'
         ? Number(lines[j].split(';')[i])
         : lines[j].split(';')[i]
 
-      const dataIndex = j - 1
+      const employeeIndex = j - 1
 
-      if (data[dataIndex]) {
-        data[dataIndex] = {
-          ...data[dataIndex],
+      if (employees[employeeIndex]) {
+        employees[employeeIndex] = {
+          ...employees[employeeIndex],
           [columnHeader]: columnValue
         }
         continue
       }
 
-      data[dataIndex] = { [columnHeader]: columnValue }
+      employees[employeeIndex] = { [columnHeader]: columnValue }
     }
   }
 
-  return data
+  return employees
 }

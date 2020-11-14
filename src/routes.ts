@@ -1,7 +1,7 @@
 import { Router } from 'express'
-import swaggerDocs from './swaggerDocs'
 import swaggerUi from 'swagger-ui-express'
 
+import swaggerDocs from './swaggerDocs'
 import EmployeeController from './controllers/EmployeeController'
 
 const router = Router()

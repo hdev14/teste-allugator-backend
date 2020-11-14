@@ -12,5 +12,5 @@ Mongo.connect(process.env.MONGO_URL || '').then(() => {
     console.log(`Server is running! -> http://localhost:${port}`)
   })
 }).catch(err => {
-  console.log(err)
+  console.error(err)
 })

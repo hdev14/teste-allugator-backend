@@ -1,5 +1,4 @@
 import Mongo from './database/Mongo'
-
 import { getEmployeesData } from './helpers'
 
 require('dotenv').config()
@@ -18,5 +17,5 @@ Mongo.connect(process.env.MONGO_URL || '').then(() => {
       process.exit(1)
     })
 }).catch(err => {
-  console.log('CONNECTION ERROR -> ', err)
+  console.error(err)
 })
