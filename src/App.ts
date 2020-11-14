@@ -1,9 +1,8 @@
 import express, { Express } from 'express'
 import cors from 'cors'
 
-import globalErrorHandler from './middlewares/global-error-handler'
-
 import routes from './routes'
+import globalErrorHandler from './middlewares/global-error-handler'
 
 class App {
   public server: Express
