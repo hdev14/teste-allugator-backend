@@ -1,21 +1,5 @@
 <h1 align="center"> Test Allugator (Backend)</h1>
 
-# Endpoints
-
-| EMPLOYEE |
-|--- |
-| ```GET:/employess/name?name=value```  |
-| ```GET:/employess/cpf?cpf=value```  |
-| ```GET:/employess/role?role=value``` |
-| ```GET:/employess/register-date?date=value```  |
-| ```GET:/employess/uf?uf=value```  |
-| ```GET:/employess/salary?min=value&max=value```  |
-| ```GET:/employess/status?status=value```  |
-| ```PUT:/employess/:id?``` |
-| ```DELETE:/employess/:cpf``` |
-
-<br/>
-
 # Uso
 
 ## Pre-requisitos
@@ -65,6 +49,10 @@ Esse projeto foi todo desenvolvido utilizando a metodologia de desenvolvimento T
 - [X] Jest com Supertest e jest Mongo(Testes);
 - [X] ESLint e Editorconfig;
 - [X] Husky e Lint-Staged;
+
+## Documentação da API
+
+Com o ambiente de desenvolvimento em execução é possível verificar a documentação da API feita com [Swagger](https://swagger.io/), basta consultar a URL ```http://localhost:4444/docs/```
 
 
 
