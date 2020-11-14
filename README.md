@@ -21,7 +21,7 @@ $ npm install
 
 ## Execução
 
-Após o download de todas as tecnologias e dependências, basta seguir esses passos:
+Após o download/instalação de todas as tecnologias e dependências, basta seguir esses passos:
 
 1. Execute o **docker-compose**:
 ```sh
