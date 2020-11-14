@@ -1,6 +1,6 @@
 import Mongo from '../../database/Mongo'
 import EmployeeService from '../../services/EmployeeService'
-import employeesFixture from '../employees-fixture.json'
+import employeesFixtures from '../employees-fixtures.json'
 
 import { EmployeeData, Status } from '../../types'
 
@@ -16,7 +16,7 @@ describe('EmployeeService Unit Tests', () => {
 
   beforeEach(async () => {
     const employeesCollection = Mongo.getCollection('employees')
-    await employeesCollection.insertMany(employeesFixture)
+    await employeesCollection.insertMany(employeesFixtures)
   })
 
   afterEach(async () => {
@@ -175,7 +175,7 @@ describe('EmployeeService Unit Tests', () => {
     expect(result).toBe(true)
   })
 
-  it('should return false on delete if employee doesnt exist', async () => {
+  it('should return false on delete if employee doesnt exists', async () => {
     const fakeCPF = '11111111111'
     const result = await EmployeeService.deleteEmployeeByCPF(fakeCPF)
     expect(result).toBe(false)

@@ -1,22 +1,23 @@
 import { ObjectID } from 'mongodb'
 import supertest from 'supertest'
+
 import App from '../../App'
 import Mongo from '../../database/Mongo'
 import { Status } from '../../types'
-import employeesFixture from '../employees-fixture.json'
+import employeesFixtures from '../employees-fixtures.json'
 
-describe('Integration tests for employee endpoints', () => {
-  let server: supertest.SuperTest<supertest.Test>
+describe('Integration Tests for Employee Endpoints', () => {
+  let apiTestClient: supertest.SuperTest<supertest.Test>
 
   beforeAll(async () => {
     // Inicializa o Jest Mongo
     await Mongo.connect(process.env.MONGO_URL || '')
-    server = supertest(App.server)
+    apiTestClient = supertest(App.server)
   })
 
   beforeEach(async () => {
     const employeesCollection = Mongo.getCollection('employees')
-    await employeesCollection.insertMany(employeesFixture)
+    await employeesCollection.insertMany(employeesFixtures)
   })
 
   afterEach(async () => {
@@ -29,17 +30,17 @@ describe('Integration tests for employee endpoints', () => {
   })
 
   it('should get a list of employee by name', async () => {
-    let response = await server.get('/employees/name').query({ name: 'Aaron' }).send()
+    let response = await apiTestClient.get('/employees/name').query({ name: 'Aaron' }).send()
     expect(response.status).toBe(200)
     expect(response.body.length).toBe(2)
 
-    response = await server.get('/employees/name').query({ name: 'Abbie' }).send()
+    response = await apiTestClient.get('/employees/name').query({ name: 'Abbie' }).send()
     expect(response.status).toBe(200)
     expect(response.body.length).toBe(1)
   })
 
   it('should return a error if name is not passed', async () => {
-    const response = await server.get('/employees/name').query({}).send()
+    const response = await apiTestClient.get('/employees/name').query({}).send()
     expect(response.status).toBe(400)
     expect(response.body).toEqual({
       message: 'O filtro de nome é obrigatório'
@@ -47,21 +48,21 @@ describe('Integration tests for employee endpoints', () => {
   })
 
   it('should get a list of employee by cpf', async () => {
-    let response = await server.get('/employees/cpf').query({ cpf: '85235708709' }).send()
+    let response = await apiTestClient.get('/employees/cpf').query({ cpf: '85235708709' }).send()
     expect(response.status).toBe(200)
     expect(response.body.nome).toBe('Aaron Aaberg')
 
-    response = await server.get('/employees/cpf').query({ cpf: '59984408701' }).send()
+    response = await apiTestClient.get('/employees/cpf').query({ cpf: '59984408701' }).send()
     expect(response.status).toBe(200)
     expect(response.body.nome).toBe('Aaron Aaby')
 
-    response = await server.get('/employees/cpf').query({ cpf: '32439637882' }).send()
+    response = await apiTestClient.get('/employees/cpf').query({ cpf: '32439637882' }).send()
     expect(response.status).toBe(200)
     expect(response.body.nome).toBe('Abbie Aagaard')
   })
 
   it('should return a error if cpf is not passed', async () => {
-    const response = await server.get('/employees/cpf').query({}).send()
+    const response = await apiTestClient.get('/employees/cpf').query({}).send()
     expect(response.status).toBe(400)
     expect(response.body).toEqual({
       message: 'O filtro de cpf é obrigatório'
@@ -69,21 +70,21 @@ describe('Integration tests for employee endpoints', () => {
   })
 
   it('should get a list of employee by role', async () => {
-    let response = await server.get('/employees/role').query({ role: 'Dev Jr' }).send()
+    let response = await apiTestClient.get('/employees/role').query({ role: 'Dev Jr' }).send()
     expect(response.status).toBe(200)
     expect(response.body.length).toBe(2)
 
-    response = await server.get('/employees/role').query({ role: 'PO Jr' }).send()
+    response = await apiTestClient.get('/employees/role').query({ role: 'PO Jr' }).send()
     expect(response.status).toBe(200)
     expect(response.body.length).toBe(1)
 
-    response = await server.get('/employees/role').query({ role: 'AC Sr' }).send()
+    response = await apiTestClient.get('/employees/role').query({ role: 'AC Sr' }).send()
     expect(response.status).toBe(200)
     expect(response.body.length).toBe(1)
   })
 
   it('should return a error if role is not passed', async () => {
-    const response = await server.get('/employees/role').query({}).send()
+    const response = await apiTestClient.get('/employees/role').query({}).send()
     expect(response.status).toBe(400)
     expect(response.body).toEqual({
       message: 'O filtro de cargo é obrigatório'
@@ -91,21 +92,21 @@ describe('Integration tests for employee endpoints', () => {
   })
 
   it('should get a list of employee by register date', async () => {
-    let response = await server.get('/employees/register-date').query({ date: '15/04/2017' }).send()
+    let response = await apiTestClient.get('/employees/register-date').query({ date: '15/04/2017' }).send()
     expect(response.status).toBe(200)
     expect(response.body.length).toBe(1)
 
-    response = await server.get('/employees/register-date').query({ date: '19/04/2017' }).send()
+    response = await apiTestClient.get('/employees/register-date').query({ date: '19/04/2017' }).send()
     expect(response.status).toBe(200)
     expect(response.body.length).toBe(2)
 
-    response = await server.get('/employees/register-date').query({ date: '05/04/2017' }).send()
+    response = await apiTestClient.get('/employees/register-date').query({ date: '05/04/2017' }).send()
     expect(response.status).toBe(200)
     expect(response.body.length).toBe(1)
   })
 
   it('should return a error if register date is not passed', async () => {
-    const response = await server.get('/employees/register-date').query({}).send()
+    const response = await apiTestClient.get('/employees/register-date').query({}).send()
     expect(response.status).toBe(400)
     expect(response.body).toEqual({
       message: 'O filtro de data de cadastro é obrigatório'
@@ -113,21 +114,21 @@ describe('Integration tests for employee endpoints', () => {
   })
 
   it('should get a list of employee by UF', async () => {
-    let response = await server.get('/employees/uf').query({ uf: 'AP' }).send()
+    let response = await apiTestClient.get('/employees/uf').query({ uf: 'AP' }).send()
     expect(response.status).toBe(200)
     expect(response.body.count).toBe(1)
 
-    response = await server.get('/employees/uf').query({ uf: 'RS' }).send()
+    response = await apiTestClient.get('/employees/uf').query({ uf: 'RS' }).send()
     expect(response.status).toBe(200)
     expect(response.body.count).toBe(2)
 
-    response = await server.get('/employees/uf').query({ uf: 'PR' }).send()
+    response = await apiTestClient.get('/employees/uf').query({ uf: 'PR' }).send()
     expect(response.status).toBe(200)
     expect(response.body.count).toBe(1)
   })
 
   it('should return a error if UF is not passed', async () => {
-    const response = await server.get('/employees/uf').query({}).send()
+    const response = await apiTestClient.get('/employees/uf').query({}).send()
     expect(response.status).toBe(400)
     expect(response.body).toEqual({
       message: 'O filtro de UF é obrigatório'
@@ -135,43 +136,43 @@ describe('Integration tests for employee endpoints', () => {
   })
 
   it('should get a list of employee by salary', async () => {
-    let response = await server.get('/employees/salary').query({
+    let response = await apiTestClient.get('/employees/salary').query({
       min: 8000, max: 9000
     }).send()
     expect(response.status).toBe(200)
     expect(response.body.length).toBe(1)
 
-    response = await server.get('/employees/salary').query({
+    response = await apiTestClient.get('/employees/salary').query({
       min: 5000, max: 6000
     }).send()
     expect(response.status).toBe(200)
     expect(response.body.length).toBe(1)
 
-    response = await server.get('/employees/salary').query({
+    response = await apiTestClient.get('/employees/salary').query({
       min: 3000, max: 4000
     }).send()
     expect(response.status).toBe(200)
     expect(response.body.length).toBe(1)
 
-    response = await server.get('/employees/salary').query({
+    response = await apiTestClient.get('/employees/salary').query({
       min: 0, max: 1000
     }).send()
     expect(response.status).toBe(200)
     expect(response.body.length).toBe(1)
 
-    response = await server.get('/employees/salary').query({
+    response = await apiTestClient.get('/employees/salary').query({
       min: 5000, max: 9000
     }).send()
     expect(response.status).toBe(200)
     expect(response.body.length).toBe(2)
 
-    response = await server.get('/employees/salary').query({
+    response = await apiTestClient.get('/employees/salary').query({
       min: 0, max: 4000
     }).send()
     expect(response.status).toBe(200)
     expect(response.body.length).toBe(2)
 
-    response = await server.get('/employees/salary').query({
+    response = await apiTestClient.get('/employees/salary').query({
       min: 0, max: 9000
     }).send()
     expect(response.status).toBe(200)
@@ -179,7 +180,7 @@ describe('Integration tests for employee endpoints', () => {
   })
 
   it('should return a error if max is not passed', async () => {
-    const response = await server.get('/employees/salary').query({}).send()
+    const response = await apiTestClient.get('/employees/salary').query({}).send()
     expect(response.status).toBe(400)
     expect(response.body).toEqual({
       message: 'Os filtros de faixa salarial são obrigatório'
@@ -187,7 +188,7 @@ describe('Integration tests for employee endpoints', () => {
   })
 
   it('should return a error if min is not passed', async () => {
-    const response = await server.get('/employees/salary').query({}).send()
+    const response = await apiTestClient.get('/employees/salary').query({}).send()
     expect(response.status).toBe(400)
     expect(response.body).toEqual({
       message: 'Os filtros de faixa salarial são obrigatório'
@@ -195,17 +196,17 @@ describe('Integration tests for employee endpoints', () => {
   })
 
   it('should get a list of employee by status', async () => {
-    let response = await server.get('/employees/status').query({ status: Status.ATIVO }).send()
+    let response = await apiTestClient.get('/employees/status').query({ status: Status.ATIVO }).send()
     expect(response.status).toBe(200)
     expect(response.body.length).toBe(3)
 
-    response = await server.get('/employees/status').query({ status: Status.BLOQUEADO }).send()
+    response = await apiTestClient.get('/employees/status').query({ status: Status.BLOQUEADO }).send()
     expect(response.status).toBe(200)
     expect(response.body.length).toBe(1)
   })
 
   it('should return a error if status is not passed', async () => {
-    const response = await server.get('/employees/status').query({}).send()
+    const response = await apiTestClient.get('/employees/status').query({}).send()
     expect(response.status).toBe(400)
     expect(response.body).toEqual({
       message: 'O filtro de status é obrigatório'
@@ -223,12 +224,12 @@ describe('Integration tests for employee endpoints', () => {
       status: Status.ATIVO
     }
 
-    const response = await server.put('/employees').send(data)
+    const response = await apiTestClient.put('/employees').send(data)
     expect(response.status).toBe(200)
     expect(response.body._id).toBeTruthy()
   })
 
-  it('should create if employee doesnt exists', async () => {
+  it('should create a new if employee doesnt exists', async () => {
     const fakeId = new ObjectID()
     const data = {
       datacad: '13/11/2020',
@@ -240,7 +241,7 @@ describe('Integration tests for employee endpoints', () => {
       status: Status.ATIVO
     }
 
-    const response = await server.put(`/employees/${fakeId}`).send(data)
+    const response = await apiTestClient.put(`/employees/${fakeId}`).send(data)
     expect(response.status).toBe(200)
     expect(response.body._id).toBeTruthy()
   })
@@ -266,7 +267,7 @@ describe('Integration tests for employee endpoints', () => {
       status: Status.ATIVO
     }
 
-    const response = await server.put(`/employees/${employee._id}`).send(data)
+    const response = await apiTestClient.put(`/employees/${employee._id}`).send(data)
     expect(response.body.datacad).toEqual(data.datacad)
     expect(response.body.cargo).toEqual(data.cargo)
     expect(response.body.cpf).toEqual(data.cpf)
@@ -287,13 +288,13 @@ describe('Integration tests for employee endpoints', () => {
       status: Status.BLOQUEADO
     })).ops[0]
 
-    const response = await server.delete(`/employees/${employee.cpf}`)
+    const response = await apiTestClient.delete(`/employees/${employee.cpf}`)
     expect(response.status).toBe(204)
   })
 
   it('should return a error on delete if employee doesnt exist', async () => {
     const fakeCPF = '11111111111'
-    const response = await server.delete(`/employees/${fakeCPF}`)
+    const response = await apiTestClient.delete(`/employees/${fakeCPF}`)
     expect(response.status).toBe(400)
     expect(response.body).toEqual({
       message: 'Funcionário não encontrardo'
