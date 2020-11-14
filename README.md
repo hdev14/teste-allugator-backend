@@ -1,4 +1,4 @@
-<h1 align="center"> Test Allugator (Backend)</h1>
+<h1 align="center"> Teste Allugator (Backend)</h1>
 
 # Uso
 
@@ -19,7 +19,7 @@ $ npm install
 
 Após o download de todas as tecnologias e dependências, basta seguir esses passos:
 
-1. Execute o docker-compose:
+1. Execute o **docker-compose**:
 ```sh
 $ docker-compose up -d
 ```
@@ -27,18 +27,21 @@ $ docker-compose up -d
 ```sh
 $ cp .env.example .env
 ```
-3. Execute o comando de seed para popular o banco de dados:
+3. Execute o comando de seed para popular o banco de dados a partir do arquivo *employees.txt*:
 ```sh
-npm run seed
+$ npm run seed
 ```
 4. Execute o projeto em modo de desenvolvimento:
 ```sh
-npm run dev
+$ npm run dev
 ```
 
 ## TDD
 
-Esse projeto foi todo desenvolvido utilizando a metodologia de desenvolvimento Test Driven Development, por isso também foram criados alguns testes de integração e de unidade. Para executar os testes, basta utilizar o seguinte comando ``` npm run test ```
+Esse projeto foi todo desenvolvido utilizando a metodologia de desenvolvimento Test Driven Development, por isso também foram criados alguns testes de integração e de unidade. Para executar os testes, basta utilizar o seguinte comando:
+```sh
+$ npm run test
+```
 
 ## Tecnologias utilizadas
 
@@ -46,13 +49,13 @@ Esse projeto foi todo desenvolvido utilizando a metodologia de desenvolvimento T
 - [X] ExpressJS;
 - [X] Mongodb;
 - [X] Docker e Docker-compose;
-- [X] Jest com Supertest e jest Mongo(Testes);
+- [X] Jest com Supertest e jest Mongo (Testes);
 - [X] ESLint e Editorconfig;
 - [X] Husky e Lint-Staged;
 
 ## Documentação da API
 
-Com o ambiente de desenvolvimento em execução é possível verificar a documentação da API feita com [Swagger](https://swagger.io/), basta consultar a URL ```http://localhost:4444/docs/```
+Com o modo de desenvolvimento em execução é possível verificar a documentação da API feita com [Swagger](https://swagger.io/), basta consultar a URL ```http://localhost:4444/docs/```
 
 
 
