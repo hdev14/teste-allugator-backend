@@ -2,7 +2,7 @@
 
 # Solução
 
-Minha proposta para esse teste foi desenvolver um endpoint para cada tipo de filtro especifico e para as outras operações (PUT/DELETE). Eu pensei incialmente em colocar as requisições do tipo GET em apenas um endpoint (GET:/employees), porém pensei melhor, e um único endpoint recebendo muitos filtros é considerado uma má prática. Para continuar seguindo o estilo arquitural REST definir um subpath especificando qual seria o tipo do filtro, por exemplo, ```/employees/uf``` que é destinado a fazer consultas por UF de nascimento do funcionário.
+Minha proposta para esse teste foi desenvolver um endpoint para cada tipo de filtro especifico e para as outras operações (PUT/DELETE). Eu pensei incialmente em colocar as requisições do tipo GET em apenas um endpoint (GET:/employees), porém depois de pensar melhor, resolvi seguir essa abordagem, porque um único endpoint recebendo muitos filtros é considerado uma má prática. Dessa forma, para continuar seguindo o estilo arquitural REST definir um subpath especificando qual seria o tipo do filtro, por exemplo, ```/employees/uf``` que é destinado a fazer consultas por UF de nascimento do funcionário.
 
 # Uso
 
@@ -59,7 +59,7 @@ $ npm run test
 
 ## Documentação da API
 
-Com o modo de desenvolvimento em execução é possível verificar a documentação da API feita com [Swagger](https://swagger.io/), basta consultar a URL ```http://localhost:4444/docs/```
+Com o modo de desenvolvimento em execução é possível verificar a documentação da API feita com [Swagger](https://swagger.io/), basta consultar a URL ```http://localhost:4444/docs/``` no browser.
 
 
 
