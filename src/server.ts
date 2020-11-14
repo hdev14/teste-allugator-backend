@@ -10,6 +10,7 @@ Mongo.connect(process.env.MONGO_URL || '').then(() => {
   const port = process.env.PORT || 3333
   server.listen(port, () => {
     console.log(`Server is running! -> http://localhost:${port}`)
+    console.log(`Api documentation -> http://localhost:${port}/docs`)
   })
 }).catch(err => {
   console.error(err)
