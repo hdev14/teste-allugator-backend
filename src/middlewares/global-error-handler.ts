@@ -4,7 +4,6 @@ function globalErrorHandler (err: Error, _: Request, res: Response, __: NextFunc
   console.error(err)
 
   return res.status(500).json({
-    error: err.name,
     message: 'Something wrong'
   })
 }
